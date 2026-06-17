@@ -1,0 +1,19 @@
+# Secrets / local config -- never commit real credentials or hostnames
+config.yaml
+*.local.yaml
+
+# Run logs
+*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
