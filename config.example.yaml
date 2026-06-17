@@ -1,0 +1,42 @@
+# Copy this file to config.yaml and fill in your values.
+# config.yaml is gitignored so your credentials never get committed.
+
+# Credentials used when a cluster doesn't specify its own.
+# Tip: keep secrets out of the file entirely with "env:VAR_NAME",
+# which reads the value from an environment variable at runtime.
+defaults:
+  username: "svc-account"
+  password: "env:CUCM_PASSWORD"   # or put the password directly (less safe)
+
+# What to do: "deactivate" (Service Activation / persistent) or "stop" (run-state only)
+action: deactivate
+
+# The service to target, exactly as shown in Cisco Serviceability.
+# This is NOT limited to WebDialer -- set it to any service name, e.g.
+# "Cisco Tftp", "Cisco CTIManager", "Cisco CallManager". With action: deactivate
+# the target must be a Feature service; action: stop works on any service.
+service_name: "Cisco WebDialer Web Service"   # <- example default; change as needed
+
+# AXL schema version in the request namespace (used for node discovery).
+# 12.5 is broadly compatible; bump toward your CUCM version if AXL rejects it.
+axl_version: "12.5"
+
+# Which clusters to act on. Empty list [] = all clusters below.
+# Recommended: roll out one cluster at a time.
+only_clusters:
+  - cluster-01
+
+clusters:
+  cluster-01:
+    # username/password optional here; omit to use defaults above.
+    publisher: "cucm01-pub.example.com"
+    # Subscribers are auto-discovered from the publisher via AXL.
+    # To skip discovery and pin an exact set, add:
+    # nodes:
+    #   - cucm01-pub.example.com
+    #   - cucm01-sub1.example.com
+
+  cluster-02:
+    username: "svc-account-2"
+    password: "env:CUCM2_PASSWORD"
+    publisher: "cucm02-pub.example.com"
